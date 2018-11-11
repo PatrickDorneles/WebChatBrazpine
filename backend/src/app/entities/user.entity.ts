@@ -5,6 +5,14 @@ import { Message, UserChat } from './'
 @Entity()
 export class User {
 
+  constructor(name: string, nickname: string, password: string, imageUrl: string, birthday: Date) {
+    this.name = name
+    this.nickname = nickname
+    this.password = password
+    this.imageUrl = imageUrl
+    this.birthday = birthday
+  }
+
   @PrimaryGeneratedColumn()
   id: number
 
