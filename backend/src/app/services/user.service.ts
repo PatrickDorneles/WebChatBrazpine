@@ -1,21 +1,22 @@
 import { getRepository, Repository } from 'typeorm'
 import { User } from '../entities';
 import { UserRequestDto, UserResponseDto } from '../dto';
-import { InvalidInputError } from '../errors/error.invalid-input';
+import { InvalidInputError } from '../errors/';
+import { genSalt, hash } from 'bcrypt';
 
 export class UserService {
 
     private userRepository: Repository<User> = getRepository(User)
 
-    async getUserById(id: number): Promise<User | undefined> {
+    public async getUserById(id: number): Promise<User | undefined> {
         return await this.userRepository.findOne({ where: { id: id }, relations: ['userChats', 'messages'] });
     }
 
-    async getUserByNickname(nickname: string): Promise<User | undefined> {
+    public async getUserByNickname(nickname: string): Promise<User | undefined> {
         return await this.userRepository.findOne({ where: { nickname }, relations: ['userChats', 'messages'] })
     }
 
-    async registerUser(user: UserRequestDto): Promise<UserResponseDto> {
+    public async registerUser(user: UserRequestDto): Promise<UserResponseDto> {
 
         const errors: string[] = this.verifyUser(user)
 
@@ -23,7 +24,9 @@ export class UserService {
             throw new InvalidInputError(errors)
         }
 
-        const newUser: User = new User(user.name, user.nickname, user.password, user.imageUrl, user.birthday)
+        const password: string = await this.hashPassword(user.password)
+
+        const newUser: User = new User(user.name, user.nickname, password, user.imageUrl, user.birthday)
 
         const savedUser: User = await this.userRepository.save(newUser)
 
@@ -57,6 +60,13 @@ export class UserService {
             invalidInputs.push('Profile Image')
         }
         return invalidInputs
+    }
+
+    private async hashPassword(password: string): Promise<string> {
+        const salt = await genSalt()
+        const hashed = await hash(password, salt)
+
+        return hashed
     }
 
 }

@@ -1,4 +1,4 @@
-import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, HttpResponseBadRequest, HttpResponseCreated, HttpResponseInternalServerError } from '@foal/core';
+import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, HttpResponseBadRequest, HttpResponseCreated, HttpResponseInternalServerError, HttpResponse } from '@foal/core';
 import { UserService } from '../services';
 import { User } from '../entities';
 import { UserRequestDto, UserResponseDto } from '../dto';
@@ -10,7 +10,7 @@ export class UserController {
   userServices: UserService
 
   @Get('/:id')
-  async getUserById(ctx: Context) {
+  async getUserById(ctx: Context): Promise<HttpResponse> {
     const id: number = ctx.request.params.id
 
     const user: User | undefined = await this.userServices.getUserById(id)
@@ -24,7 +24,7 @@ export class UserController {
   }
 
   @Post('/')
-  async registerUser(ctx: Context) {
+  async registerUser(ctx: Context): Promise<HttpResponse> {
 
     const userToRegister: UserRequestDto = ctx.request.body
 
