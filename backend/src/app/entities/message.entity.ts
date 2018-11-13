@@ -1,5 +1,5 @@
 // @ts-ignore : 'Column' is declared but its value is never read.
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
 import { Chat, User } from './'
 
 @Entity()
@@ -11,13 +11,13 @@ export class Message {
   @Column()
   text: string
 
-  @Column()
+  @CreateDateColumn()
   dateTime: Date
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, user => user.messages)
   user: User
 
-  @ManyToOne(type => Chat)
+  @ManyToOne(type => Chat, chat => chat.messages)
   chat: Chat
 
 }

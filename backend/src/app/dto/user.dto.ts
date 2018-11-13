@@ -6,6 +6,7 @@ export interface UserRequestDto {
     password: string
     imageUrl: string
     birthday: Date
+    isAdmin?: boolean
 }
 
 export interface UserResponseDto {

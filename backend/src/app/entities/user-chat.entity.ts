@@ -9,10 +9,10 @@ export class UserChat {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(type => Chat)
+  @ManyToOne(type => Chat, chat => chat.userChats)
   chat: Chat
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, user => user.userChats)
   user: User
 
 }

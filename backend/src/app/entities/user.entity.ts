@@ -37,4 +37,16 @@ export class User {
   @OneToMany(type => UserChat, userChat => userChat.user)
   userChats: UserChat[]
 
+  @Column()
+  isAdmin: boolean
+
+  public setAdmin(): void {
+    this.isAdmin = true
+  }
+
+  public setCommon(): void {
+    this.isAdmin = false
+  }
+
+
 }

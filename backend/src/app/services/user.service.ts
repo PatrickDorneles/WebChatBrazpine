@@ -28,6 +28,8 @@ export class UserService {
 
         const newUser: User = new User(user.name, user.nickname, password, user.imageUrl, user.birthday)
 
+        user.isAdmin ? newUser.setAdmin() : newUser.setCommon() 
+        
         const savedUser: User = await this.userRepository.save(newUser)
 
         const userResponse: UserResponseDto = {
@@ -56,7 +58,7 @@ export class UserService {
         if (!userDto.birthday || userDto.birthday === null || +userDto.birthday > Date.now()) {
             invalidInputs.push('Birthday')
         }
-        if (!userDto.imageUrl) {
+        if (!userDto.imageUrl && userDto.imageUrl !== "") {
             invalidInputs.push('Profile Image')
         }
         return invalidInputs
