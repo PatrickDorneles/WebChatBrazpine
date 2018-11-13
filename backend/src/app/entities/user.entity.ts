@@ -1,4 +1,3 @@
-// @ts-ignore : 'Column' is declared but its value is never read.
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Message, UserChat } from './'
 
