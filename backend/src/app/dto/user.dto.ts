@@ -1,4 +1,4 @@
-import { UserChat } from "../entities";
+import { Chat } from "../entities";
 
 export interface UserRequestDto {
     name: string
@@ -14,5 +14,5 @@ export interface UserResponseDto {
     nickname: string
     imageUrl: string
     birthday: Date
-    userChats: UserChat[]
+    chats: Chat[]
 }

@@ -5,17 +5,29 @@ import { fail, ok } from "assert";
 import { InvalidInputError } from "../errors";
 import { createConnection, Connection } from "typeorm";
 import { connect } from "tls";
+import { User, Message, Chat } from "../entities";
 
 
 
 
 describe('User Service', () => {
 
-    let connection: Connection 
+    let connection: Connection
     let service: UserService
 
     before(async () => {
-        connection = await createConnection()
+        connection = await createConnection({
+            // Choose a test database. You don't want to run your tests on your production data.
+            database: './test_db.sqlite3',
+            // Drop the schema when the connection is established.
+            dropSchema: true,
+            // Register the models that are used.
+            entities: [User, Message, Chat],
+            // Auto create the database schema.
+            synchronize: true,
+            // Specify the type of database.
+            type: 'sqlite',
+        });
         service = createService(UserService)
     })
 
@@ -37,7 +49,7 @@ describe('User Service', () => {
             } catch (error) {
                 ok(error instanceof InvalidInputError)
             }
-            
+
 
         })
 
@@ -57,7 +69,7 @@ describe('User Service', () => {
             } catch (error) {
                 ok(error instanceof InvalidInputError)
             }
-            
+
 
         })
 
@@ -77,12 +89,12 @@ describe('User Service', () => {
             } catch (error) {
                 ok(error instanceof InvalidInputError)
             }
-            
+
 
         })
 
         it('should register the user', async () => {
-            
+
             const userMock: UserRequestDto = {
                 name: 'John',
                 nickname: 'John',
@@ -92,12 +104,12 @@ describe('User Service', () => {
             }
 
             try {
-                const user: UserResponseDto = await service.registerUser(userMock)                
+                const user: UserResponseDto = await service.registerUser(userMock)
                 ok(user)
             } catch (error) {
                 fail("shouldn't throw error")
             }
-            
+
 
         })
 

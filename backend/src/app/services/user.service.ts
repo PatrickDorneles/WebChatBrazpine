@@ -28,8 +28,8 @@ export class UserService {
 
         const newUser: User = new User(user.name, user.nickname, password, user.imageUrl, user.birthday)
 
-        user.isAdmin ? newUser.setAdmin() : newUser.setCommon() 
-        
+        user.isAdmin ? newUser.setAdmin() : newUser.setCommon()
+
         const savedUser: User = await this.userRepository.save(newUser)
 
         const userResponse: UserResponseDto = {
@@ -37,7 +37,7 @@ export class UserService {
             nickname: savedUser.nickname,
             birthday: savedUser.birthday,
             imageUrl: savedUser.imageUrl,
-            userChats: savedUser.userChats
+            chats: savedUser.chats
         }
 
         return userResponse;

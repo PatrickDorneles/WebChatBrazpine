@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Message, UserChat } from './'
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Message } from './'
+import { Chat } from './chat.entity';
 
 @Entity()
 export class User {
@@ -33,8 +34,8 @@ export class User {
   @OneToMany(type => Message, message => message.user)
   messages: Message[]
 
-  @OneToMany(type => UserChat, userChat => userChat.user)
-  userChats: UserChat[]
+  @ManyToMany(type => Chat, chat => chat.users)
+  chats: Chat[]
 
   @Column()
   isAdmin: boolean
