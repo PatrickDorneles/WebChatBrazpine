@@ -5,6 +5,8 @@ import { Chat, User } from './'
 @Entity()
 export class Message {
 
+
+
   @PrimaryGeneratedColumn()
   id: number;
 

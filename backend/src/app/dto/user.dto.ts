@@ -10,9 +10,9 @@ export interface UserRequestDto {
 }
 
 export interface UserResponseDto {
+    id: number
     name: string
     nickname: string
     imageUrl: string
     birthday: Date
-    chats: Chat[]
 }

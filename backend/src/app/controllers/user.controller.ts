@@ -2,7 +2,7 @@ import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, H
 import { UserService } from '../services';
 import { User } from '../entities';
 import { UserRequestDto, UserResponseDto } from '../dto';
-import { InvalidInputError } from '../errors/error.invalid-input';
+import { InvalidInputError } from '../errors/invalid-input.error';
 
 export class UserController {
 
@@ -35,7 +35,12 @@ export class UserController {
     }
 
     try {
-      const savedUser: UserResponseDto = await this.userServices.registerUser(userToRegister)
+      const user: UserResponseDto = await this.userServices.registerUser(userToRegister)
+
+      const savedUser: UserResponseDto = {
+        ...user
+      }
+
       return new HttpResponseCreated({ savedUser })
     } catch (error) {
       if (error instanceof InvalidInputError) {

@@ -9,11 +9,11 @@ export class UserService {
     private userRepository: Repository<User> = getRepository(User)
 
     public async getUserById(id: number): Promise<User | undefined> {
-        return await this.userRepository.findOne({ where: { id: id }, relations: ['userChats', 'messages'] });
+        return await this.userRepository.findOne({ where: { id: id }, relations: ['chats', 'messages'] });
     }
 
     public async getUserByNickname(nickname: string): Promise<User | undefined> {
-        return await this.userRepository.findOne({ where: { nickname }, relations: ['userChats', 'messages'] })
+        return await this.userRepository.findOne({ where: { nickname }, relations: ['chats', 'messages'] })
     }
 
     public async registerUser(user: UserRequestDto): Promise<UserResponseDto> {
@@ -32,16 +32,16 @@ export class UserService {
 
         const savedUser: User = await this.userRepository.save(newUser)
 
-        const userResponse: UserResponseDto = {
-            name: savedUser.name,
-            nickname: savedUser.nickname,
-            birthday: savedUser.birthday,
-            imageUrl: savedUser.imageUrl,
-            chats: savedUser.chats
-        }
+        return savedUser;
 
-        return userResponse;
+    }
 
+    public async searchUser(nickname: string): Promise<UserResponseDto[]> {
+        const users: User[] = await this.userRepository.find()
+
+        const usersFound: User[] = users.filter((u) => u.nickname.toLowerCase().includes(nickname.toLowerCase()))
+
+        return usersFound
     }
 
     private verifyUser(userDto: UserRequestDto): string[] {
