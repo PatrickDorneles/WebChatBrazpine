@@ -1,0 +1,75 @@
+$card-height: 300px;
+$card-width: 250px;
+
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    overflow: hidden;
+
+    .cards {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        position: relative;
+        height: $card-height;
+        width: $card-width;
+
+
+        .input-card {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            height: $card-height;
+            width: $card-width;
+            border-radius: 25px;
+
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            
+            transition: 0.5s;
+
+            &.first-focus {
+                z-index: 15;
+            }
+            
+
+            &.focus {
+                animation-name: cardGetFocus;
+                animation-duration: 2s;
+                animation-fill-mode: forwards;
+                top: 0;
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+            }
+
+        }
+
+    }
+
+}
+
+@keyframes cardGetFocus {
+    0% {
+        z-index: 10;
+    }
+
+    40% {
+        top: 115%;
+    }
+
+    100% {
+        top: 0;
+        z-index: 20;
+    }
+}

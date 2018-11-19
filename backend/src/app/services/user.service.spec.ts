@@ -116,6 +116,7 @@ describe('User Service', () => {
     })
 
     after(async () => {
+        await connection.dropDatabase()
         await connection.close()
     })
 
