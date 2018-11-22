@@ -1,11 +1,13 @@
 import { createService } from "@foal/core";
 import { UserService } from "./user.service";
-import { UserRequestDto, UserResponseDto } from "../dto";
+import { UserRequestDto, UserResponseDto, UserLoginRequestDto } from "../dto";
 import { fail, ok } from "assert";
-import { InvalidInputError } from "../errors";
+import { InvalidInputError, InvalidNicknameOrPasswordError } from "../errors";
 import { createConnection, Connection } from "typeorm";
-import { connect } from "tls";
 import { User, Message, Chat } from "../entities";
+import { genSalt, hash } from "bcrypt";
+import { verify } from 'jsonwebtoken'
+import { ITokenPayload } from "../utils";
 
 
 
@@ -108,6 +110,103 @@ describe('User Service', () => {
                 ok(user)
             } catch (error) {
                 fail("shouldn't throw error")
+            }
+
+
+        })
+
+    })
+
+
+    describe('login user', () => {
+
+        it("should throw an error if the user doesn't exist", async () => {
+
+            service.getUserByNickname = (nickname: string) => {
+                return new Promise((resolve) => {
+                    resolve(undefined)
+                })
+            }
+
+            const loginMock: UserLoginRequestDto = {
+                nickname: 'Joao',
+                password: '1234'
+            }
+
+            try {
+                await service.loginUser(loginMock)
+                fail('should throw an error')
+            } catch (error) {
+                ok(error instanceof InvalidNicknameOrPasswordError)
+            }
+
+        })
+
+        it("should throw an error if the password is wrong", async () => {
+
+            const encript: (password: string) => Promise<string> = async (password: string): Promise<string> => {
+                const salt = await genSalt()
+                const hashed = await hash(password, salt)
+
+                return hashed
+            }
+
+            service.getUserByNickname = (nickname: string) => {
+                return new Promise(async (resolve) => {
+                    resolve({
+                        nickname: nickname,
+                        password: await encript('1234')
+                    } as User)
+                })
+            }
+
+            const loginMock: UserLoginRequestDto = {
+                nickname: 'Joao',
+                password: '4321'
+            }
+
+            try {
+                await service.loginUser(loginMock)
+                fail('should throw an error')
+            } catch (error) {
+                ok(error instanceof InvalidNicknameOrPasswordError)
+            }
+
+        })
+
+        it('should return a token', async () => {
+
+            const encript: (password: string) => Promise<string> = async (password: string): Promise<string> => {
+                const salt = await genSalt()
+                const hashed = await hash(password, salt)
+
+                return hashed
+            }
+
+            const mockUserToReceive = {
+                id: 1,
+                nickname: 'Joao',
+                password: await encript('1234'),
+                isAdmin: false
+            } as User
+
+            service.getUserByNickname = (nickname: string) => {
+                return new Promise(async (resolve) => {
+                    resolve(mockUserToReceive)
+                })
+            }
+
+            const loginMock: UserLoginRequestDto = {
+                nickname: 'Joao',
+                password: '1234'
+            }
+
+            try {
+                const token = await service.loginUser(loginMock)
+                const decoded = verify(token, 'jwtPrivateKey') as ITokenPayload
+                ok(decoded.id === mockUserToReceive.id && decoded.isAdmin === mockUserToReceive.isAdmin)
+            } catch (error) {
+                fail("shouldn't throw an error")
             }
 
 
