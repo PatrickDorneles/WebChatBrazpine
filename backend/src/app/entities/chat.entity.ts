@@ -6,6 +6,10 @@ import { User } from './user.entity';
 @Entity()
 export class Chat {
 
+  constructor(users: User[]) {
+    this.users = users
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 

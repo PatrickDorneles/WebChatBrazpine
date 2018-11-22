@@ -1,8 +1,10 @@
 import { getRepository, Repository } from 'typeorm'
 import { User } from '../entities';
-import { UserRequestDto, UserResponseDto } from '../dto';
-import { InvalidInputError } from '../errors/';
-import { genSalt, hash } from 'bcrypt';
+import { UserRequestDto, UserResponseDto, UserLoginRequestDto } from '../dto';
+import { InvalidInputError, InvalidNicknameOrPasswordError } from '../errors/';
+import { genSalt, hash, compare } from 'bcrypt';
+import { sign, SignOptions } from 'jsonwebtoken'
+import { ITokenPayload } from '../utils';
 
 export class UserService {
 
@@ -16,7 +18,7 @@ export class UserService {
         return await this.userRepository.findOne({ where: { nickname }, relations: ['chats', 'messages'] })
     }
 
-    public async registerUser(user: UserRequestDto): Promise<UserResponseDto> {
+    public async registerUser(user: UserRequestDto): Promise<User> {
 
         const errors: string[] = this.verifyUser(user)
 
@@ -36,7 +38,7 @@ export class UserService {
 
     }
 
-    public async searchUser(nickname: string): Promise<UserResponseDto[]> {
+    public async searchUser(nickname: string): Promise<User[]> {
         const users: User[] = await this.userRepository.find()
 
         const usersFound: User[] = users.filter((u) => u.nickname.toLowerCase().includes(nickname.toLowerCase()))
@@ -62,6 +64,36 @@ export class UserService {
             invalidInputs.push('Profile Image')
         }
         return invalidInputs
+    }
+
+    public async loginUser(login: UserLoginRequestDto) {
+        
+        const userFound: User | undefined = await this.getUserByNickname(login.nickname)
+
+        if(!userFound) {
+            throw new InvalidNicknameOrPasswordError()
+        }
+
+        const isPasswordOk: boolean = await compare(login.password, userFound.password)
+
+        if(!isPasswordOk) {
+            throw new InvalidNicknameOrPasswordError()
+        }
+
+
+        const tokenPayload: ITokenPayload = {
+            id: userFound.id,
+            isAdmin: userFound.isAdmin
+        }
+
+        const signOptions: SignOptions = {
+            expiresIn: '3d'
+        }
+
+        const token = sign(tokenPayload, 'jwtPrivateKey', signOptions)
+
+        return token
+
     }
 
     private async hashPassword(password: string): Promise<string> {

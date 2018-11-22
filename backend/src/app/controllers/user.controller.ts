@@ -1,7 +1,7 @@
 import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, HttpResponseBadRequest, HttpResponseCreated, HttpResponseInternalServerError, HttpResponse } from '@foal/core';
 import { UserService } from '../services';
 import { User } from '../entities';
-import { UserRequestDto, UserResponseDto } from '../dto';
+import { UserRequestDto, UserResponseDto, UserLoginRequestDto } from '../dto';
 import { InvalidInputError } from '../errors/invalid-input.error';
 
 export class UserController {
@@ -23,6 +23,16 @@ export class UserController {
 
   }
 
+  @Post('/signin')
+  async signInUser(ctx: Context): Promise<HttpResponse> {
+    const userToLogin: UserLoginRequestDto = ctx.request.body
+
+    const token = this.userServices.loginUser(userToLogin)
+
+    return new HttpResponseOK({ token })
+
+  }
+
   @Post('/')
   async registerUser(ctx: Context): Promise<HttpResponse> {
 
@@ -35,10 +45,14 @@ export class UserController {
     }
 
     try {
-      const user: UserResponseDto = await this.userServices.registerUser(userToRegister)
+      const user: User = await this.userServices.registerUser(userToRegister)
 
       const savedUser: UserResponseDto = {
-        ...user
+        id: user.id,
+        name: user.name,
+        nickname: user.nickname,
+        imageUrl: user.imageUrl,
+        birthday: user.birthday
       }
 
       return new HttpResponseCreated({ savedUser })

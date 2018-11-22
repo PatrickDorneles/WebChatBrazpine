@@ -1,8 +1,9 @@
 import { Repository, getRepository } from "typeorm";
-import { Message } from "../entities";
+import { Message, User, Chat } from "../entities";
 import { MessageRequestDto } from "../dto/message.dto";
 import { dependency } from "@foal/core";
 import { UserService } from "./user.service";
+import { ChatService } from "./chat.service";
 import { UserNotFoundError } from "../errors";
 
 
@@ -11,15 +12,30 @@ export class MessageService {
     @dependency
     userService: UserService
 
+    @dependency
+    chatService: ChatService
+
     messageRepository: Repository<Message> = getRepository(Message)
 
-    public async sendMessage(message: MessageRequestDto) {
+    public async sendMessage(messageReq: MessageRequestDto, loggedUserId: number) {
 
-        const user = await this.userService.getUserById(message.userId)
+        let chat: Chat | undefined = await this.chatService.getChatByUsers(loggedUserId, messageReq.receiverUserId)
 
-        if (!user) {
+        const user = await this.userService.getUserById(loggedUserId);
+
+        if(!user) {
             throw new UserNotFoundError()
         }
+
+        if(!chat) {
+            chat = await this.chatService.saveChat(loggedUserId, messageReq.receiverUserId)
+        }
+
+        const message: Message = new Message(messageReq.text, chat, user)
+
+        const savedMessage: Message = await this.messageRepository.save(message)
+
+        return savedMessage
 
     }
 

@@ -29,12 +29,14 @@
     "@foal/ejs": "~0.6.0",
     "bcrypt": "^3.0.2",
     "connect-sqlite3": "^0.9.11",
+    "jsonwebtoken": "^8.4.0",
     "source-map-support": "^0.5.1",
     "sqlite3": "^4.0.0",
     "typeorm": "^0.2.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.0",
     "@types/mocha": "^5.2.1",
     "@types/node": "^8.0.47",
     "concurrently": "^3.5.1",

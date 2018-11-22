@@ -16,3 +16,8 @@ export interface UserResponseDto {
     imageUrl: string
     birthday: Date
 }
+
+export interface UserLoginRequestDto {
+    nickname: string,
+    password: string
+}

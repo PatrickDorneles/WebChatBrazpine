@@ -6,6 +6,11 @@ import { Chat, User } from './'
 export class Message {
 
 
+  constructor(text: string, chat: Chat, user: User) {
+    this.text = text
+    this.chat = chat
+    this.user = user
+  }
 
   @PrimaryGeneratedColumn()
   id: number;
