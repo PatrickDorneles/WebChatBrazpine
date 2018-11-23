@@ -90,7 +90,7 @@ export class UserService {
             expiresIn: '3d'
         }
 
-        const token = sign(tokenPayload, 'jwtPrivateKey', signOptions)
+        const token: string = sign(tokenPayload, 'jwtPrivateKey', signOptions)
 
         return token
 

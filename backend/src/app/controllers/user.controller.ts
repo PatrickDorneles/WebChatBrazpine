@@ -27,7 +27,7 @@ export class UserController {
   async signInUser(ctx: Context): Promise<HttpResponse> {
     const userToLogin: UserLoginRequestDto = ctx.request.body
 
-    const token = this.userServices.loginUser(userToLogin)
+    const token = await this.userServices.loginUser(userToLogin)
 
     return new HttpResponseOK({ token })
 
