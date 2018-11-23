@@ -1,8 +1,10 @@
-import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, HttpResponseBadRequest, HttpResponseCreated, HttpResponseInternalServerError, HttpResponse } from '@foal/core';
+import { Context, Get, HttpResponseOK, dependency, HttpResponseNotFound, Post, HttpResponseBadRequest, HttpResponseCreated, HttpResponseInternalServerError, HttpResponse, HttpResponseForbidden } from '@foal/core';
 import { UserService } from '../services';
 import { User } from '../entities';
 import { UserRequestDto, UserResponseDto, UserLoginRequestDto } from '../dto';
 import { InvalidInputError } from '../errors/invalid-input.error';
+import { InvalidNicknameOrPasswordError } from '../errors';
+import { ErrorData } from '../utils';
 
 export class UserController {
 
@@ -16,7 +18,12 @@ export class UserController {
     const user: User | undefined = await this.userServices.getUserById(id)
 
     if (!user) {
-      return new HttpResponseNotFound({ message: 'User with requested id was not found' })
+      
+      const data: ErrorData = {
+        message: 'User with requested id was not found'
+      }
+
+      return new HttpResponseNotFound(data)
     }
 
     return new HttpResponseOK({ user })
@@ -27,9 +34,21 @@ export class UserController {
   async signInUser(ctx: Context): Promise<HttpResponse> {
     const userToLogin: UserLoginRequestDto = ctx.request.body
 
-    const token = await this.userServices.loginUser(userToLogin)
+    try {
+     const token = await this.userServices.loginUser(userToLogin) 
+     return new HttpResponseOK({ token })
+    } catch (error) {
+      const data: ErrorData = {
+        message: error.message
+      }
 
-    return new HttpResponseOK({ token })
+      if(error instanceof InvalidNicknameOrPasswordError) {
+        return new HttpResponseForbidden(data)
+      }
+
+      return new HttpResponseInternalServerError(data)
+    }
+
 
   }
 
@@ -41,7 +60,10 @@ export class UserController {
     const userWithSameNick: User | undefined = await this.userServices.getUserByNickname(userToRegister.nickname)
 
     if (userWithSameNick) {
-      return new HttpResponseBadRequest({ message: 'This nickname is already in use' })
+      const data: ErrorData = {
+        message: 'This nickname is already in use'
+      }
+      return new HttpResponseBadRequest(data)
     }
 
     try {
@@ -57,10 +79,14 @@ export class UserController {
 
       return new HttpResponseCreated({ savedUser })
     } catch (error) {
-      if (error instanceof InvalidInputError) {
-        return new HttpResponseBadRequest({ message: error.message })
+      const data: ErrorData = {
+        message: error.message
       }
-      return new HttpResponseInternalServerError({ message: error.message })
+
+      if (error instanceof InvalidInputError) {
+          return new HttpResponseBadRequest(data)
+      }
+      return new HttpResponseInternalServerError(data)
     }
 
   }
