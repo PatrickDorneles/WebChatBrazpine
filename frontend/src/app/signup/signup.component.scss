@@ -1,0 +1,47 @@
+@import '../../variables.scss';
+
+$signup-card-width: 350px;
+
+.sign-up {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-image: url("../../assets/resources/images/background.jpg"); 
+    background-size: cover;
+    overflow-y: auto;
+
+
+    .title-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: calc(100% - #{$signup-card-width});
+
+        .title {
+            position: relative;
+            bottom: 20%;
+            display: flex;
+            flex-direction: column;
+            font-size: 4em;
+            font-family: $title-font;
+            color: white;
+            text-align: center;
+            user-select: none;
+    
+            .color-title {    
+                font-family: $title-font;
+                color: $primary;
+            }
+        }
+    }
+
+    .signup-card {
+        display: flex;
+        height: 100%;
+        width: $signup-card-width ;
+        background: $surface
+    }
+
+}

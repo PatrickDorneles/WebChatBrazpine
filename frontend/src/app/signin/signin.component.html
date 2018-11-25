@@ -1,9 +1,18 @@
-<div class="background">
-  <button class="sidebarbutton">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M2 13.5h14V12H2v1.5zm0-4h14V8H2v1.5zM2 4v1.5h14V4H2z"/></svg>
-  </button>
-  <div class="sidebar">
-    
+<div class="sign-in">
+  <span class="title"> <span class="color-title">WebChat</span> Brazpine</span>
+
+  <div class="login-card">
+    <form>
+      <div class="form-input">
+        <input type="text" id="nick" placeholder="Your nick here">
+        <label for="nick">Nickname</label>
+      </div>
+      <div class="form-input">
+        <input type="password" id="pass" placeholder="Your pass here">
+        <label for="pass">Password</label>
+      </div>
+      <button>Sign In</button>
+    </form>
+    <a [routerLink]="['signup']">Don’t have an account? Sign up</a>
   </div>
-  <img src="" alt="" class="background-image">
-</div>  
+</div>
