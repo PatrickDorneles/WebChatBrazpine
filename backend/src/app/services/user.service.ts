@@ -3,7 +3,7 @@ import { User } from '../entities';
 import { UserRequestDto, UserResponseDto, UserLoginRequestDto } from '../dto';
 import { InvalidInputError, InvalidNicknameOrPasswordError } from '../errors/';
 import { genSalt, hash, compare } from 'bcrypt';
-import { sign, SignOptions } from 'jsonwebtoken'
+import { sign, SignOptions, verify } from 'jsonwebtoken'
 import { ITokenPayload } from '../utils';
 
 export class UserService {
@@ -94,6 +94,15 @@ export class UserService {
 
         return token
 
+    }
+
+    public getPayloadFromToken(token: string): ITokenPayload | undefined {
+        try {
+            const payload: ITokenPayload = verify(token, 'jwtPrivateKey') as ITokenPayload
+            return payload
+        } catch (error) {
+            return undefined
+        }
     }
 
     private async hashPassword(password: string): Promise<string> {
