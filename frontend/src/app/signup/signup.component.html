@@ -4,6 +4,35 @@
     <span class="title"> <span class="color-title">WebChat</span> Brazpine</span>
   </div>
   <div class="signup-card">
+    <div class="title-section"></div>
+    <div class="form">
+      <div class="form-input">
+        <input type="text" id="name" placeholder="Your name here">
+        <label for="name">Name</label>
+      </div>
+      <div class="form-input">
+        <input type="text" id="nick" placeholder="Your nick here">
+        <label for="nick">Nickname</label>
+      </div>
+      <div class="form-input">
+        <input type="password" id="pass" placeholder="Your pass here">
+        <label for="pass">Password</label>
+      </div>
+      <div class="form-input">
+        <input type="password" id="re-pass" placeholder="Your pass here">
+        <label for="re-pass">Rewrite Password</label>
+      </div>
+      <div class="form-input">
+        <input type="date" id="date" placeholder="Your birthday here">
+        <label for="date">Birthday</label>
+      </div>
 
+      <div class="checkbox">
+        <input type="checkbox" id="admin">
+        <label for="admin">Are you admin?</label>
+      </div>
+      <button>Sign Up</button>
+    </div>
+    <a [routerLink]="['']">Already have an account? Sign in</a>
   </div>
 </div>

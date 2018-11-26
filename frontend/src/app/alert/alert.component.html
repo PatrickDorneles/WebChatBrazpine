@@ -1,0 +1,6 @@
+<div [className]="alertClassName" *ngIf="alert">
+  <section class="close" (click)="onClose()">
+    x
+  </section>
+  <section class="message">{{alert.message}}</section>
+</div>

@@ -39,9 +39,176 @@ $signup-card-width: 350px;
 
     .signup-card {
         display: flex;
+        flex-direction: column;
+        align-items: center;
         height: 100%;
         width: $signup-card-width ;
-        background: $surface
+        background: $surface;
+
+        .form {
+            position: relative;
+            top: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            .form-input {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                width: 90%;
+                margin-bottom: 20px;
+    
+
+                input[type=date] {
+                    text-align: start;
+
+                    &:focus {
+                        width: 70%;
+                        border-bottom: 1px solid $primary;
+                    }
+                }
+
+                input[type=file] {
+                    text-align: start;
+                    color: $primary;
+                    border: none;
+                    background: none;
+                }
+
+                input {
+                    background: transparent;
+                    border: none;
+                    border-bottom: 1px solid black;
+                    outline: none;
+                    text-align: center;
+                    width: 70%;
+                    transition: .2s;
+                    font-size: 1.05em;
+
+                    &:focus::-webkit-input-placeholder {
+                        color: transparent;
+                    }
+
+                    &::-webkit-input-placeholder {
+                        transition: .2s;
+                    }
+
+                    &:focus {
+                        width: 90%;
+                        border-bottom: 1px solid $primary;
+                        color: $primary;
+                        
+                    }
+
+                    &:focus + label {
+                        color: $primary;
+                    }
+
+                    &:-webkit-autofill,
+                    &:-webkit-autofill:hover, 
+                    &:-webkit-autofill:focus, 
+                    &:-webkit-autofill:active  {
+                        -webkit-box-shadow: 0 0 0 30px white inset;
+                    }
+
+                }
+    
+                label {
+                    font-size: 1.1em;
+                    color: black;
+                    transition: .2s;
+                    margin-bottom: 10px;
+
+                }
+    
+    
+            }
+
+            button {
+                background: $primary;
+                border: none;
+                padding: 7px 22px;
+                color: white;
+                font-size: 1.02em;
+                margin: 5px;
+                outline: none;
+                transition: .2s;
+                cursor: pointer;
+
+                &:hover {
+                    background: $primary-darker
+                }
+
+                &:active {
+                    background: $primary-darker-plus
+                }
+            }
+        }
+
+        .checkbox {
+            position: relative;
+            margin-bottom: 10px;
+
+            input {
+                position: absolute;
+                opacity: 0;
+
+                &:checked + label {
+                    color: $success;
+                }
+
+                &:checked + label::before {
+                    transform: translateY(-60%) rotate(45deg);
+                    top: 50%;
+                    left: 15px;
+                    width: 5px;
+                    border-top: none;
+                    border-left: none;
+                    border-color: $success;
+                }
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                user-select: none;
+                cursor: pointer;
+                padding: 8px 10px;
+                padding-left: 35px;
+                transition: 0.5s;
+                color: $primary;
+                font-family: 'Roboto';
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 10px;
+                    transform: translateY(-50%);
+                    display: inline-block;
+                    width: 15px;
+                    height: 15px;
+                    border: 2px solid $primary-darker   ;
+                    transition-duration: .1s;
+                }
+            }
+
+            
+
+        }
+
+        a {
+            position: absolute;
+            bottom: 5%;
+            color: $primary;
+            text-decoration-line: underline;
+            cursor: pointer;
+        }
+
     }
 
 }

@@ -26,7 +26,7 @@ export class SocketApp {
         const userPayload: ITokenPayload | undefined = this.userService.getPayloadFromToken(message.token)
         
         if(!userPayload) {
-            this.socket.emit('error', { message: 'Token recebido é invalido' } )
+            this.socket.emit('error', { message: 'Received token is invalid' } )
             return;
         }
 
@@ -38,7 +38,6 @@ export class SocketApp {
         this.messageService.sendMessage(messageRequest, userPayload.id)
 
     }
-
 
 
 }
