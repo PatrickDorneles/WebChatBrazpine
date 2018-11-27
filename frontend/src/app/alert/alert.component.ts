@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AlertComponent implements OnInit {
 
-  @Input() alert: Alert
+  @Input() alert: Alert | undefined
   @Input() onClose: () => void
 
   alertClassName: string
@@ -15,6 +15,7 @@ export class AlertComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.alertClassName = `alert`
   }
 
 }

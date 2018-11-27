@@ -1,0 +1,56 @@
+@import '../../variables.scss';
+
+.alert {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    max-width: 300px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .close {
+        display: flex;
+        height: 40px;
+        justify-content:flex-end;
+
+        button {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+
+            svg {
+                width: 100%;
+                height: 100%;
+                transition: .2s;
+            }
+
+            &:hover svg{
+                fill: $error;
+            }
+        }
+    }
+
+    &.error {
+        .message {
+            color: $error
+        }
+    }
+
+    &.success {
+        .message {
+            color: $success
+        }
+    }
+
+    .message {
+        padding: 10px 10px 20px 10px;
+        text-align: center;
+    }
+
+}

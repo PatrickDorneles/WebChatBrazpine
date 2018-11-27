@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Alert, AlertType } from '../alert/alert.component';
 
 @Component({
   selector: 'app-signin',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
+  alert?: Alert
+
   constructor() { }
 
   ngOnInit() {
+    this.alert = undefined
+  }
+
+  closeAlert() {
+    this.alert = undefined
+  }
+
+  onClickOpenAlert() {
+    this.alert = {
+      message: 'Teste',
+      alertType: AlertType.WARNING
+    }
   }
 
 }

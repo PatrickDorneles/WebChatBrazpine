@@ -11,8 +11,9 @@
         <input type="password" id="pass" placeholder="Your pass here">
         <label for="pass">Password</label>
       </div>
-      <button>Sign In</button>
+      <button (click)="onClickOpenAlert()">Sign In</button>
     </div>
     <a [routerLink]="['signup']">Don’t have an account? Sign up</a>
   </div>
 </div>
+<app-alert [alert]="alert" [onClose]="closeAlert"></app-alert>

@@ -7,32 +7,33 @@
     <div class="title-section"></div>
     <div class="form">
       <div class="form-input">
-        <input type="text" id="name" placeholder="Your name here">
+        <input [(ngModel)]="signup.name" type="text" id="name" placeholder="Your name here">
         <label for="name">Name</label>
       </div>
       <div class="form-input">
-        <input type="text" id="nick" placeholder="Your nick here">
+        <input [(ngModel)]="signup.nickname" type="text" id="nick" placeholder="Your nick here">
         <label for="nick">Nickname</label>
       </div>
       <div class="form-input">
-        <input type="password" id="pass" placeholder="Your pass here">
+        <input [(ngModel)]="signup.password" type="password" id="pass" placeholder="Your pass here">
         <label for="pass">Password</label>
       </div>
       <div class="form-input">
-        <input type="password" id="re-pass" placeholder="Your pass here">
+        <input [(ngModel)]="signup.rePassword" type="password" id="re-pass" placeholder="Your pass here">
         <label for="re-pass">Rewrite Password</label>
       </div>
       <div class="form-input">
-        <input type="date" id="date" placeholder="Your birthday here">
+        <input [(ngModel)]="signup.birthday" type="date" id="date" placeholder="Your birthday here">
         <label for="date">Birthday</label>
       </div>
 
       <div class="checkbox">
-        <input type="checkbox" id="admin">
+        <input [(ngModel)]="signup.isAdmin" type="checkbox" id="admin">
         <label for="admin">Are you admin?</label>
       </div>
-      <button>Sign Up</button>
+      <button (click)="onClickSignUp()">Sign Up</button>
     </div>
     <a [routerLink]="['']">Already have an account? Sign in</a>
   </div>
 </div>
+<app-alert [alert]="alert" [onClose]="closeAlert"></app-alert>
