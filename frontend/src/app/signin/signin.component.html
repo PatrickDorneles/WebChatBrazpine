@@ -16,4 +16,4 @@
     <a [routerLink]="['signup']">Don’t have an account? Sign up</a>
   </div>
 </div>
-<app-alert [alert]="alert" [onClose]="closeAlert"></app-alert>
+<app-alert [alert]="alert" [onClose]="closeAlert" *ngIf="alert"></app-alert>

@@ -1,4 +1,4 @@
-import { UserController, ChatController } from './controllers'
+import { UserController } from './controllers'
 import { controller, Options, Context, HttpResponseOK, Hook } from '@foal/core';
 
 @Hook(() => (ctx, services, response) => {
@@ -7,8 +7,7 @@ import { controller, Options, Context, HttpResponseOK, Hook } from '@foal/core';
 
 export class AppController {
   subControllers = [
-    controller('/api/user', UserController),
-    controller('/api/chat', ChatController)
+    controller('/api/user', UserController)
   ];
 
   @Options('*')

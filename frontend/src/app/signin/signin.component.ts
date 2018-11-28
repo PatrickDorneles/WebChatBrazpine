@@ -23,7 +23,7 @@ export class SigninComponent implements OnInit {
   onClickOpenAlert() {
     this.alert = {
       message: 'Teste',
-      alertType: AlertType.WARNING
+      alertType: AlertType.SUCCESS
     }
   }
 

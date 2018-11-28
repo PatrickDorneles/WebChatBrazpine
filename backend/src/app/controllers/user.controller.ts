@@ -18,7 +18,7 @@ export class UserController {
     const user: User | undefined = await this.userServices.getUserById(id)
 
     if (!user) {
-      
+
       const data: ErrorData = {
         message: 'User with requested id was not found'
       }
@@ -35,14 +35,14 @@ export class UserController {
     const userToLogin: UserLoginRequestDto = ctx.request.body
 
     try {
-     const token = await this.userServices.loginUser(userToLogin) 
-     return new HttpResponseOK({ token })
+      const token = await this.userServices.loginUser(userToLogin)
+      return new HttpResponseOK({ token })
     } catch (error) {
       const data: ErrorData = {
         message: error.message
       }
 
-      if(error instanceof InvalidNicknameOrPasswordError) {
+      if (error instanceof InvalidNicknameOrPasswordError) {
         return new HttpResponseForbidden(data)
       }
 
@@ -52,7 +52,7 @@ export class UserController {
 
   }
 
-  @Post('/')
+  @Post('/signup')
   async registerUser(ctx: Context): Promise<HttpResponse> {
 
     const userToRegister: UserRequestDto = ctx.request.body
@@ -84,7 +84,7 @@ export class UserController {
       }
 
       if (error instanceof InvalidInputError) {
-          return new HttpResponseBadRequest(data)
+        return new HttpResponseBadRequest(data)
       }
       return new HttpResponseInternalServerError(data)
     }

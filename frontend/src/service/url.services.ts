@@ -1,0 +1,1 @@
+export const DEFAULT_API_URL: string = 'localhost:3000/api'

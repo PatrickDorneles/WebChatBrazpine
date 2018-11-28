@@ -36,4 +36,4 @@
     <a [routerLink]="['']">Already have an account? Sign in</a>
   </div>
 </div>
-<app-alert [alert]="alert" [onClose]="closeAlert"></app-alert>
+<app-alert [alert]="alert" [onClose]="closeAlert" *ngIf="alert"></app-alert>

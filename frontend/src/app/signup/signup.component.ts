@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Alert, AlertType } from '../alert/alert.component';
+import { SignUpService } from 'src/service';
+import { UserSignUp, ReceivedSignUpUser } from 'src/entities';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +14,7 @@ export class SignupComponent implements OnInit {
 
   alert?: Alert
 
-  constructor() { }
+  constructor(private signUpService: SignUpService) { }
 
   ngOnInit() {
     this.alert = undefined
@@ -31,7 +33,7 @@ export class SignupComponent implements OnInit {
     this.alert = undefined
   }
 
-  onClickSignUp() {
+  async onClickSignUp() {
     const signUp: SignUpInputs = this.signup
 
     if (signUp.password !== signUp.rePassword) {
@@ -40,6 +42,32 @@ export class SignupComponent implements OnInit {
         alertType: AlertType.ERROR
       }
     }
+
+    const signUpUser: UserSignUp = {
+      name: signUp.name,
+      nickname: signUp.nickname,
+      password: signUp.password,
+      birthday: signUp.birthday,
+      isAdmin: signUp.isAdmin,
+      imageUrl: signUp.imageUrl
+    }
+
+
+    try {
+      const receivedUser: ReceivedSignUpUser = await this.signUpService.signUpUser(signUpUser)
+      this.alert = {
+        message: "User registered with success",
+        alertType: AlertType.SUCCESS
+      }
+    } catch (error) {
+      console.log(error);
+
+      this.alert = {
+        message: error.message,
+        alertType: AlertType.ERROR
+      }
+    }
+
 
   }
 
