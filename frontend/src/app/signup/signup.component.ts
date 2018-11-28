@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Alert, AlertType } from '../alert/alert.component';
+import { Alert } from '../alert/alert.component';
 import { SignUpService } from 'src/service';
 import { UserSignUp, ReceivedSignUpUser } from 'src/entities';
 
@@ -38,8 +38,7 @@ export class SignupComponent implements OnInit {
 
     if (signUp.password !== signUp.rePassword) {
       this.alert = {
-        message: "The writen passwords aren't equivalent",
-        alertType: AlertType.ERROR
+        message: "The writen passwords aren't equivalent"
       }
     }
 
@@ -56,15 +55,11 @@ export class SignupComponent implements OnInit {
     try {
       const receivedUser: ReceivedSignUpUser = await this.signUpService.signUpUser(signUpUser)
       this.alert = {
-        message: "User registered with success",
-        alertType: AlertType.SUCCESS
+        message: "User registered with success"
       }
     } catch (error) {
-      console.log(error);
-
       this.alert = {
-        message: error.message,
-        alertType: AlertType.ERROR
+        message: error.error.message
       }
     }
 

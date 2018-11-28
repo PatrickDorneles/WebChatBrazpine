@@ -31,20 +31,8 @@
             }
 
             &:hover svg{
-                fill: $error;
+                fill: $primary;
             }
-        }
-    }
-
-    &.error {
-        .message {
-            color: $error
-        }
-    }
-
-    &.success {
-        .message {
-            color: $success
         }
     }
 

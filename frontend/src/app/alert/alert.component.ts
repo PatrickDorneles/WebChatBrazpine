@@ -15,19 +15,12 @@ export class AlertComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.alertClassName = `alert ${this.alert.alertType}`
+    this.alertClassName = `alert`
   }
 
 }
 
-export enum AlertType {
-  ERROR = 'error',
-  SUCCESS = 'success',
-  WARNING = 'warning',
-  COMMON = ''
-}
 
 export interface Alert {
-  message: string,
-  alertType: AlertType
+  message: string
 }

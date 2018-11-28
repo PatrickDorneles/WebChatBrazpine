@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Alert, AlertType } from '../alert/alert.component';
+import { Alert } from '../alert/alert.component';
 
 @Component({
   selector: 'app-signin',
@@ -22,8 +22,7 @@ export class SigninComponent implements OnInit {
 
   onClickOpenAlert() {
     this.alert = {
-      message: 'Teste',
-      alertType: AlertType.SUCCESS
+      message: 'Teste'
     }
   }
 

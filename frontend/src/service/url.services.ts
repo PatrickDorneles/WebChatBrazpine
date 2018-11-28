@@ -1,1 +1,1 @@
-export const DEFAULT_API_URL: string = 'localhost:3000/api'
+export const DEFAULT_API_URL: string = 'http://localhost:3000'
