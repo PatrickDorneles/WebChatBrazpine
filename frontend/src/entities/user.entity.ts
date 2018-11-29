@@ -1,3 +1,12 @@
+export interface UserSignIn {
+    nickname: string
+    password: string
+}
+
+export interface TokenSignInReceiver {
+    token: string
+}
+
 export interface UserSignUp {
     name: string
     nickname: string
