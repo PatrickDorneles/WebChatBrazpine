@@ -31,7 +31,7 @@ export class SigninComponent implements OnInit {
 
   async onClickLogin() {
     try {
-      const tokenObj = await this.signInService.signUpUser(this.signin)
+      const tokenObj = await this.signInService.signInUser(this.signin)
       console.log(tokenObj.token);
     } catch (error) {
       this.alert = {

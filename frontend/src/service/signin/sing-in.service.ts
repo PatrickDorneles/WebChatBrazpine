@@ -14,7 +14,7 @@ export class SignInService {
 
     constructor(private http: HttpClient) { }
 
-    signUpUser(user: UserSignIn): Promise<TokenSignInReceiver> {
+    signInUser(user: UserSignIn): Promise<TokenSignInReceiver> {
         return this.http.post<TokenSignInReceiver>(`${DEFAULT_API_URL}/auth/`, user, httpOptions).toPromise()
     }
 
