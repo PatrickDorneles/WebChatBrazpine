@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { AlertComponent } from './alert/alert.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     SignupComponent,
-    AlertComponent
+    AlertComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

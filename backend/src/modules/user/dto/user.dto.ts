@@ -14,5 +14,6 @@ export interface UserResponseDto {
     nickname: string
     imageUrl: string
     birthday: Date
+    isAdmin: boolean
 }
 

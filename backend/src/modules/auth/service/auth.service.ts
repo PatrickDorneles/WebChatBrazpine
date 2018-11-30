@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt'
 import { UserService } from 'src/modules/user/service/user.service';
 import { AuthTokenPayload } from '../interface/auth.interface';
@@ -39,7 +39,17 @@ export class AuthService {
 
     }
 
-    async getUserByPayload(tokenPayload: AuthTokenPayload): Promise<User | undefined> {
+    public async getUserByToken(token: string): Promise<User | undefined> {
+        const jwtToken: string = token.replace("Bearer ", "")
+        try {
+            const userTokenPayload: AuthTokenPayload = this.jwtService.verify<AuthTokenPayload>(jwtToken)
+            return await this.getUserByPayload(userTokenPayload)
+        } catch (error) {
+            throw new UnauthorizedException()
+        }
+    }
+
+    private async getUserByPayload(tokenPayload: AuthTokenPayload): Promise<User | undefined> {
         return await this.userService.getUserById(tokenPayload.id)
     }
 

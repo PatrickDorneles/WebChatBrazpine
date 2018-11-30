@@ -1,3 +1,12 @@
+export interface AuthenticatedUser {
+    id: number
+    name: string
+    nickname: string
+    imageUrl: string
+    birthday: Date
+    isAdmin: boolean
+}
+
 export interface UserSignIn {
     nickname: string
     password: string
