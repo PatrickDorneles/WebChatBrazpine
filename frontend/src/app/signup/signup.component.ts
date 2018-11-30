@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit {
       password: '',
       rePassword: '',
       birthday: new Date(),
-      isAdmin: true,
+      isAdmin: false,
       imageUrl: ''
     }
   }
