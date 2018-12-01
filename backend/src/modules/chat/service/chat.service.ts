@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/modules/user/service/user.service';
+import { UserService } from '../../user/service/user.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chat } from '../entity/chat.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/modules/user/entity/user.entity';
+import { User } from '../../user/entity/user.entity';
 import { UserNotFoundError } from 'src/exceptions';
 
 @Injectable()

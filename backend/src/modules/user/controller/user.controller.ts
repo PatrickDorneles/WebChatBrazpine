@@ -5,7 +5,6 @@ import { ErrorData } from 'src/utils';
 import { User } from '../entity/user.entity';
 import { HttpError } from 'src/exceptions/http-error.error';
 import { AuthGuard } from '@nestjs/passport';
-import { UserNotFoundError } from 'src/exceptions';
 
 @Controller('user')
 export class UserController {
@@ -29,7 +28,8 @@ export class UserController {
             name: userFound.name,
             nickname: userFound.nickname,
             imageUrl: userFound.imageUrl,
-            birthday: userFound.birthday
+            birthday: userFound.birthday,
+            isAdmin: userFound.isAdmin
         }
 
         return {
@@ -57,7 +57,8 @@ export class UserController {
                 name: user.name,
                 nickname: user.nickname,
                 imageUrl: user.imageUrl,
-                birthday: user.birthday
+                birthday: user.birthday,
+                isAdmin: user.isAdmin
             }
 
             return { savedUser }

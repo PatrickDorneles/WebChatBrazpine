@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/modules/user/service/user.service';
-import { ChatService } from 'src/modules/chat/service/chat.service';
+import { UserService } from '../../user/service/user.service';
+import { ChatService } from '../../chat/service/chat.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from '../entity/message.entity';
 import { Repository } from 'typeorm';
-import { Chat } from 'src/modules/chat/entity/chat.entity';
+import { Chat } from '../../chat/entity/chat.entity';
 import { UserNotFoundError } from 'src/exceptions';
 import { MessageRequestDto } from '../dto/message.dto';
 

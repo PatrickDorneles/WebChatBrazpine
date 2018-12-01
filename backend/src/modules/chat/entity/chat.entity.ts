@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm";
-import { User } from "src/modules/user/entity/user.entity";
-import { Message } from "src/modules/message/entity/message.entity";
+import { User } from "../../user/entity/user.entity";
+import { Message } from "../../message/entity/message.entity";
 
 
 @Entity()

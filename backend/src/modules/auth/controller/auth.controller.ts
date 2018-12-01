@@ -4,8 +4,8 @@ import { AuthRequestDto, AuthUserHeaderDto } from "../dto/auth.dto";
 import { ErrorData } from "src/utils";
 import { HttpError } from "src/exceptions/http-error.error";
 import { AuthGuard } from "@nestjs/passport";
-import { User } from "src/modules/user/entity/user.entity";
-import { UserResponseDto } from "src/modules/user/dto/user.dto";
+import { User } from "../../user/entity/user.entity";
+import { UserResponseDto } from "../../user/dto/user.dto";
 
 @Controller('auth')
 export class AuthController {

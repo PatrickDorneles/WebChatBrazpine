@@ -1,0 +1,144 @@
+@import '../../variables.scss';
+
+$sidebar-width: 300px;
+$contact-tab-height: 95px;
+$user-tab-height: 70px;
+$message-input-heigth: 80px;
+
+.main {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-image: url("../../assets/resources/images/background.jpg"); 
+    background-size: cover;
+
+    .sidebar {
+        height: 100%;
+        width: $sidebar-width;
+        background: $surface;
+        box-shadow: 5px 0 10px rgba(0, 0, 0, 0.5);
+
+        .userimage {
+            height: 60px;
+            width: 60px;
+            
+        }
+
+        .user-tab {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: $user-tab-height;
+            width: 100%;
+            background: $primary;
+            
+            & * {
+                margin: 0 10px;
+            }
+
+            .more {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                height: 40px;
+                width: 40px;
+                background: transparent;
+                border-radius: 100%;
+                transition: .2s;
+                border: none;
+                padding: 0;
+                outline: 0;
+
+                cursor: pointer;
+
+                & svg {
+                    fill: white;
+                    height: 75%;
+                    width: 75%;
+                    margin: 0;
+                }
+                
+                &:active {
+                    filter: brightness(0.9);
+                    background: rgba(0, 0, 0, 0.2);
+                }
+
+            }
+        }
+    }
+
+    .chat {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: calc(100% - #{$sidebar-width});
+        background: transparent;
+
+        .contact-tab {
+            height: $contact-tab-height;
+            width: 100%;
+            background: $primary-darker;
+        }
+
+        .message-container {
+            height: calc(100% - #{$contact-tab-height} - #{$message-input-heigth});
+            width: 100%;
+            border: 1px solid red;
+        }
+
+        .input-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: $message-input-heigth;
+            width: 100%;
+            border: 1px solid yellow;
+
+            button {
+                height: 60px;
+                width: 60px;
+                border-radius: 100%;
+                margin: 10px;
+
+                transition: .2s;
+                background: transparent;
+                border: none;
+                outline: none;
+
+                cursor: pointer;
+
+                svg {
+                    fill: white;
+                    height: 80%;
+                    width: 80%;
+                }
+
+                &:active {
+                    filter: brightness(0.9);
+                    background: rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            textarea {
+                resize: none;
+                font-size: 20px;
+                line-height: 40px;
+                height: 40px;
+                width: 80%;
+                border: none;
+                border-radius: 25px;
+                padding: 0 20px;
+                outline: none;
+
+                &::-webkit-scrollbar {
+                    position: absolute;
+                    right: 25px;
+                }
+            }
+        }
+
+    }
+}

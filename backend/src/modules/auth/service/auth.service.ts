@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt'
-import { UserService } from 'src/modules/user/service/user.service';
+import { UserService } from '../../user/service/user.service';
 import { AuthTokenPayload } from '../interface/auth.interface';
-import { User } from 'src/modules/user/entity/user.entity';
+import { User } from '../../user/entity/user.entity';
 import { InvalidNicknameOrPasswordError } from 'src/exceptions';
 import { SignOptions } from 'jsonwebtoken';
 import { AuthRequestDto } from '../dto/auth.dto';
@@ -49,7 +49,7 @@ export class AuthService {
         }
     }
 
-    private async getUserByPayload(tokenPayload: AuthTokenPayload): Promise<User | undefined> {
+    public async getUserByPayload(tokenPayload: AuthTokenPayload): Promise<User | undefined> {
         return await this.userService.getUserById(tokenPayload.id)
     }
 
