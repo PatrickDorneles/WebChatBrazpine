@@ -5,6 +5,7 @@ import { UserService } from '../user/service/user.service';
 import { ChatService } from '../chat/service/chat.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from './entity/message.entity';
+import { MessageService } from './service/message.service';
 
 @Module({
     imports: [
@@ -14,7 +15,11 @@ import { Message } from './entity/message.entity';
     ],
     providers: [
         UserService,
-        ChatService
+        ChatService,
+        MessageService
+    ],
+    exports: [
+        MessageService
     ]
 })
 export class MessageModule { }

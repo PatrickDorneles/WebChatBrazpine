@@ -15,6 +15,10 @@ export class ChatService {
         private readonly chatRepository: Repository<Chat>
     ) { }
 
+    public async getChatById(id: number) {
+        return await this.chatRepository.findOne({ where: { id: id }, relations: ['users', 'messages'] })
+    }
+
     public async getChatsByOneUser(userId: number): Promise<Chat[]> {
         const user: User | undefined = await this.userService.getUserById(userId)
 
@@ -22,9 +26,11 @@ export class ChatService {
             throw new UserNotFoundError()
         }
 
-        const chats: Chat[] = user.chats;
+        const chats: Chat[] = await this.chatRepository.find({ relations: ['users', 'messages'] })
 
-        return chats;
+        const userChats = chats.filter(c => (c.users.find(u => u.id === userId) !== undefined))
+
+        return userChats;
     }
 
     public async getChatByUsers(loggedUserId: number, friendUserId: number): Promise<Chat | undefined> {
@@ -40,9 +46,9 @@ export class ChatService {
             throw new UserNotFoundError()
         }
 
-        const loggedUserChats: Chat[] = loggedUser.chats
+        const chats: Chat[] = await this.chatRepository.find({ relations: ['users', 'messages'] })
 
-        const chatBetweenUsers: Chat | undefined = loggedUserChats.find(c => c.users.find(u => u === friendUser) !== undefined)
+        const chatBetweenUsers = chats.find(c => (c.users.find(u => u.id === loggedUserId) !== undefined) && (c.users.find(u => u.id === friendUserId) !== undefined))
 
         return chatBetweenUsers
 

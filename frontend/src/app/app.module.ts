@@ -9,6 +9,8 @@ import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { AlertComponent } from './alert/alert.component';
 import { MainComponent } from './main/main.component';
+import { ContactComponent } from './main/contact/contact.component';
+import { ChatComponent } from './main/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { MainComponent } from './main/main.component';
     SigninComponent,
     SignupComponent,
     AlertComponent,
-    MainComponent
+    MainComponent,
+    ContactComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

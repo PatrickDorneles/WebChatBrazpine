@@ -1,32 +1,37 @@
 <div class="main">
   <div class="sidebar">
-    <div class="user-tab">
-      <div class="userimage">
-        <img src="" alt="">
+    <div class="sidetab">
+      <div class="user-tab">
+        <div class="user">
+          <div class="userimage">
+            <img *ngIf="user.imageUrl" [src]="user.imageUrl" alt="">
+            <svg *ngIf="!user.imageUrl" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+              <path d="M9 8c1.66 0 2.99-1.34 2.99-3S10.66 2 9 2C7.34 2 6 3.34 6 5s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V16h14v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+            </svg>
+          </div>
+          <span class="username">
+            {{user.nickname}}
+          </span>
+        </div>
+        <button class="more">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+            <path d="M9 5.5c.83 0 1.5-.67 1.5-1.5S9.83 2.5 9 2.5 7.5 3.17 7.5 4 8.17 5.5 9 5.5zm0 2c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5S9.83 7.5 9 7.5zm0 5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z" />
+          </svg>
+        </button>
       </div>
-      <button class="more">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-          <path d="M9 5.5c.83 0 1.5-.67 1.5-1.5S9.83 2.5 9 2.5 7.5 3.17 7.5 4 8.17 5.5 9 5.5zm0 2c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5S9.83 7.5 9 7.5zm0 5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z" />
-        </svg>
-      </button>
-    </div>
-    <div class="searchbar">
-
-    </div>
-    <div class="contacts">
-
-    </div>
-  </div>
-  <div class="chat">
-    <div class="contact-tab"></div>
-    <div class="message-container"></div>
-    <div class="input-message">
-      <textarea name="" id="" placeholder="Escreva uma mensagem"></textarea>
-      <button>
+      <div class="searchbar">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
         </svg>
-      </button>
+        <input type="text" name="" id="" placeholder="Search an user" [(ngModel)]="userSearch">
+      </div>
+    </div>
+    <div *ngIf="!userSearch" class="contacts">
+      <contact *ngFor="let contact of contacts" [contact]="contact" [onClick]="clickContactOpenChat"></contact>
+    </div>
+    <div *ngIf="userSearch" class="searchedusers">
+      <contact *ngFor="let contact of searchedUsers" [contact]="contact" [onClick]="clickContactOpenChat"></contact>
     </div>
   </div>
+  <chat *ngIf="activeChat" [chat]="activeChat" [sendMessage]="sendMessage" [ngStyle]="{'width':'calc(100% - 300px'}"></chat>
 </div>
