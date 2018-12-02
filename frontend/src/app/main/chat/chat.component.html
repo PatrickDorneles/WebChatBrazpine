@@ -10,7 +10,14 @@
       {{chat.contact.nickname}}
     </span>
   </div>
-  <div class="message-container"></div>
+  <div class="message-container">
+    <div class="messages" id="messages">
+      <div *ngFor="let message of chat.messages" [ngClass]="{'user': message.userId !== chat.contact.id, 'contact': message.userId === chat.contact.id}"
+        class="message">
+        <span class="text">{{message.message}}</span>
+      </div>
+    </div>
+  </div>
   <div class="input-message">
     <input placeholder="Write a message" [(ngModel)]="message" />
     <button (click)="send()">

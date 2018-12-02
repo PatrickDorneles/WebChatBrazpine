@@ -3,3 +3,10 @@ export interface Message {
     userId: number
     text: string
 }
+
+export interface MessageWithContact {
+    id: number
+    userId: number
+    contactId: number
+    text: string
+}

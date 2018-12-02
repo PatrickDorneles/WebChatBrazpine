@@ -18,9 +18,6 @@ export interface ContactUser {
 export interface MessageResponse {
     message: string
     userId: number
+    contactId?: number
 }
 
-export interface ChatResponse {
-    contactId: number
-    messages: MessageResponse[]
-}

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthenticatedUser, ContactUser, Chat } from 'src/entities';
+import { AuthenticatedUser, ContactUser, Chat, MessageWithContact, Message } from 'src/entities';
 import { Router } from '@angular/router';
 import { SocketService, UserService } from 'src/service';
+import { ChatService } from 'src/service/chat/chat.service';
 
 @Component({
   selector: 'app-main',
@@ -22,7 +23,11 @@ export class MainComponent implements OnInit {
   chats: Chat[]
   activeChat: Chat
 
-  constructor(private socketService: SocketService, private userService: UserService, private router: Router) {
+  constructor(
+    private socketService: SocketService,
+    private userService: UserService,
+    private chatService: ChatService,
+    private router: Router) {
     this.clickContactOpenChat = this.clickContactOpenChat.bind(this)
     this.sendMessage = this.sendMessage.bind(this)
   }
@@ -32,12 +37,26 @@ export class MainComponent implements OnInit {
     this.contacts = []
     this.user = { id: -1, name: '', nickname: '', imageUrl: '', birthday: new Date(), isAdmin: false }
     await this.getAuthenticatedUser()
+    await this.getChatsFromAuth()
+
     this.token = localStorage.getItem('token')
+
     this.socket = this.socketService.connect(this.token)
+
     this.socket.on('search_result', (contactsFound: ContactUser[]) => {
       this.searchedUsers = contactsFound
+    })
 
+    this.socket.on('new_chat', (chatResponse: Chat) => {
+      this.chats.push(chatResponse)
+      this.contacts.push(chatResponse.contact)
+      this.activeChat = chatResponse
+    })
 
+    this.socket.on('new_message', (message: MessageWithContact) => {
+      const contactChat = this.chats.find(c => c.contact.id === message.contactId)
+      contactChat.messages.push(message as Message)
+      this.pullMessagesScrollToEnd()
     })
   }
 
@@ -50,7 +69,20 @@ export class MainComponent implements OnInit {
     }
   }
 
+  async getChatsFromAuth() {
+    const chats: Chat[] = await this.chatService.getChatsFromAuth()
+
+    this.chats = chats
+    this.contacts = chats.map(c => c.contact)
+    this.activeChat = this.chats[0];
+  }
+
   sendMessage(message: string) {
+
+    if (!message) {
+      return
+    }
+
     const chat: Chat = this.activeChat
 
     const messageReq: MessageRequest = {
@@ -58,6 +90,7 @@ export class MainComponent implements OnInit {
       contactId: chat.contact.id,
       message: message
     }
+
     this.socket.emit('message', messageReq)
   }
 
@@ -81,11 +114,21 @@ export class MainComponent implements OnInit {
         contact,
         messages: []
       }
-
       this.activeChat = newChat
-
+      this.pullMessagesScrollToEnd()
+    } else {
+      const chatWithContact: Chat = this.chats.find(c => c.contact.id === contact.id)
+      this.activeChat = chatWithContact
+      this.pullMessagesScrollToEnd()
     }
 
+  }
+
+  pullMessagesScrollToEnd() {
+    setTimeout(() => {
+      const objDiv = document.getElementById("messages");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    })
   }
 
 }

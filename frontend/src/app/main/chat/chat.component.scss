@@ -53,9 +53,80 @@ $message-input-heigth: 80px;
     }
 
     .message-container {
+        display: inline-flex;
+        flex-direction: column-reverse;
         height: calc(100% - #{$contact-tab-height} - #{$message-input-heigth});
         width: 100%;
         border: 1px solid red;
+
+        .messages {
+            display: inline-flex;
+            flex-direction: column;
+            height: fit-content;
+            width: 100%;    
+            padding: 10px;
+            overflow-y: auto;
+            
+            .message {
+                display: flex;
+                min-height: fit-content;
+                margin: 10px 15px;
+                background: white;
+                max-width: 40%;
+                padding: 5px 15px 5px;
+                border-radius: 25px;
+                filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+    
+                .text {
+                    min-height: 20px;
+                }
+    
+                &.user {
+                    display: flex;
+                    position: relative;
+                    background: $primary-lighter;
+                    align-self: flex-end; 
+                    border-top-right-radius: 0;
+    
+                    &::after {
+                        content: '';
+                        width: 0; 
+                        height: 0; 
+                        position: absolute;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid $primary-lighter;
+                        top: 0;
+                        right: -10px;
+                        transform: rotate(-45deg) translateY(-24%);
+                    }
+    
+                }
+    
+                &.contact {
+                    display: flex;
+                    position: relative;
+                    background: white;
+                    align-self: flex-start; 
+                    border-top-left-radius: 0;
+    
+                    &::after {
+                        content: '';
+                        width: 0; 
+                        height: 0; 
+                        position: absolute;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid white;
+                        top: 0;
+                        left: -10px;
+                        transform: rotate(45deg) translateY(-23.2%);
+                    }
+    
+                }
+    
+            }
+        }
     }
 
     .input-message {
