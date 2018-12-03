@@ -11,6 +11,7 @@ import { AlertComponent } from './alert/alert.component';
 import { MainComponent } from './main/main.component';
 import { ContactComponent } from './main/contact/contact.component';
 import { ChatComponent } from './main/chat/chat.component';
+import { AdminSignupComponent } from './main/admin-signup/admin-signup.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ChatComponent } from './main/chat/chat.component';
     AlertComponent,
     MainComponent,
     ContactComponent,
-    ChatComponent
+    ChatComponent,
+    AdminSignupComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,8 @@ export class MainComponent implements OnInit {
 
   moreActive: boolean
 
+  adminSignUp: boolean
+
   constructor(
     private socketService: SocketService,
     private userService: UserService,
@@ -49,6 +51,11 @@ export class MainComponent implements OnInit {
     this.initializeSocket()
 
 
+  }
+
+  onClickToAdminSignUp() {
+    this.activeChat = undefined
+    this.adminSignUp = true
   }
 
   onClickToLogout() {
@@ -79,10 +86,8 @@ export class MainComponent implements OnInit {
 
   async getAuthenticatedUser() {
     try {
-      console.log('here');
 
       const userObj = await this.userService.getAuthenticatedUser()
-      console.log('or here');
       this.user = userObj.user
     } catch (error) {
       this.router.navigateByUrl('/')

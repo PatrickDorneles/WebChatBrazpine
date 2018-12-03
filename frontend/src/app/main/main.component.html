@@ -29,7 +29,7 @@
               </svg>
             </button>
             <div *ngIf="moreActive" id="more-dropdown" class="dropdown">
-              <button *ngIf="user.isAdmin">Adicionar Usuario</button>
+              <button *ngIf="user.isAdmin" (click)="onClickToAdminSignUp()">Adicionar Usuario</button>
               <button (click)="onClickToLogout()">Sair</button>
             </div>
           </div>
@@ -57,4 +57,5 @@
     </div>
   </div>
   <chat *ngIf="activeChat" [chat]="activeChat" [sendMessage]="sendMessage" [ngStyle]="{'width':'calc(100% - 300px'}"></chat>
+  <admin-signup *ngIf="!activeChat && adminSignUp"></admin-signup>
 </div>

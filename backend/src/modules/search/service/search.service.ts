@@ -22,10 +22,6 @@ export class SearchService {
     public async searchUsersWithToken(search: string, token: string) {
         let usersFound: User[] = await this.searchUser(search)
         const connectedUser = await this.authService.getUserByToken(token)
-
-        console.log(connectedUser.chats);
-
-
         const searchQuery = (u: User) => u.id !== connectedUser.id && !connectedUser.chats.find(c => c.users.find(u2 => u2.id === u.id) !== undefined)
 
         usersFound = usersFound.filter(searchQuery)
