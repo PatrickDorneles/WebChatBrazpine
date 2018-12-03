@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserModule, ChatModule, MessageModule, AuthModule } from './modules'
+import { UserModule, ChatModule, MessageModule, AuthModule, SearchModule } from './modules'
 import { SocketModule } from './socket/socket.module';
 
 @Module({
@@ -10,7 +10,8 @@ import { SocketModule } from './socket/socket.module';
     ChatModule,
     MessageModule,
     AuthModule,
-    SocketModule
+    SocketModule,
+    SearchModule
   ]
 })
 export class AppModule { }

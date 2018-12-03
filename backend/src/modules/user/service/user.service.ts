@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { genSalt, hash } from 'bcrypt'
 import { InvalidInputError } from 'src/exceptions';
 import { UserRequestDto } from '../dto/user.dto';
+import { ContactUser } from 'src/socket/interfaces/socket.interfaces';
+import { AuthService } from 'src/modules/auth/service/auth.service';
 
 @Injectable()
 export class UserService {
@@ -14,8 +16,12 @@ export class UserService {
         private readonly userRepository: Repository<User>
     ) { }
 
+    public async getUsers() {
+        return await this.userRepository.find({ relations: ['chats', 'messages', 'chats.users'] })
+    }
+
     public async getUserById(id: number): Promise<User | undefined> {
-        return await this.userRepository.findOne({ where: { id: id }, relations: ['chats', 'messages'] });
+        return await this.userRepository.findOne({ where: { id: id }, relations: ['chats', 'messages', 'chats.users'] });
     }
 
     public async getUserByNickname(nickname: string): Promise<User | undefined> {
@@ -42,13 +48,7 @@ export class UserService {
 
     }
 
-    public async searchUser(nickname: string): Promise<User[]> {
-        const users: User[] = await this.userRepository.find()
 
-        const usersFound: User[] = users.filter((u) => u.nickname.toLowerCase().includes(nickname.toLowerCase()))
-
-        return usersFound
-    }
 
     private verifyUser(userDto: UserRequestDto): string[] {
         const invalidInputs: string[] = []

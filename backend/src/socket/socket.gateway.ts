@@ -55,19 +55,7 @@ export class ChatGateway implements OnGatewayDisconnect {
 
     @SubscribeMessage('search_user')
     async searchUser(socket: Socket, searchParams: { search: string, token: string }) {
-        let usersFound: User[] = await this.userService.searchUser(searchParams.search)
-        const connectedUser = await this.authService.getUserByToken(searchParams.token)
-        usersFound = usersFound.filter(u => u.id !== connectedUser.id)
 
-        const contactsFound = usersFound.map((u): ContactUser => {
-            return {
-                id: u.id,
-                name: u.name,
-                nickname: u.nickname,
-                imageUrl: u.imageUrl
-            }
-        })
-        socket.emit('search_result', contactsFound)
     }
 
 

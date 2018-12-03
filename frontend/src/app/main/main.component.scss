@@ -77,34 +77,38 @@ $message-input-heigth: 80px;
 
                 }
 
-                .more {
+                .buttons {
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: relative;
-                    height: 40px;
-                    width: 40px;
-                    background: transparent;
-                    border-radius: 100%;
-                    transition: .2s;
-                    border: none;
-                    padding: 0;
-                    outline: 0;
-
-                    cursor: pointer;
-
-                    & svg {
-                        fill: white;
-                        height: 75%;
-                        width: 75%;
-                        margin: 0;
-                    }
                     
-                    &:active {
-                        filter: brightness(0.9);
-                        background: rgba(0, 0, 0, 0.2);
+                    button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        position: relative;
+                        height: 40px;
+                        width: 40px;
+                        background: transparent;
+                        border-radius: 100%;
+                        transition: .2s;
+                        border: none;
+                        padding: 0;
+                        outline: 0;
+    
+                        cursor: pointer;
+    
+                        & svg {
+                            fill: white;
+                            height: 60%;
+                            width: 60%;
+                            margin: 0;
+                        }
+                        
+                        &:active {
+                            filter: brightness(0.9);
+                            background: rgba(0, 0, 0, 0.2);
+                        }
+    
                     }
-
                 }
             }
 
@@ -131,12 +135,16 @@ $message-input-heigth: 80px;
                     height: 25px;
                     width: 25px;    
                 }
+
+                &.inactive {
+                    display: none;
+                }
             }
             
             
         }
 
-        .contacts {
+        .contacts, .searchedusers  {
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -144,18 +152,18 @@ $message-input-heigth: 80px;
             width: 100%;
             z-index: 5;
             
+            .message-box {
+                align-self: center;
+                text-align: center;
+                margin: 25px;
+                padding: 20px;
+                width: 60%;
+                background: #eeeeee;
+                border-radius: 10px;
+            }
             
         }
 
-        .searchedusers {
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-
-            width: 100%;
-            
-            z-index: 5;
-        }
 
     }
 
