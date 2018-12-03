@@ -65,6 +65,10 @@ export class MainComponent implements OnInit {
   }
 
   async searchUsers() {
+    if (!this.userSearch) {
+      return
+    }
+
     const contactsFound = await this.userService.searchUsers(this.userSearch)
     this.searchedUsers = contactsFound
   }

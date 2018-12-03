@@ -53,12 +53,6 @@ export class ChatGateway implements OnGatewayDisconnect {
         }
     }
 
-    @SubscribeMessage('search_user')
-    async searchUser(socket: Socket, searchParams: { search: string, token: string }) {
-
-    }
-
-
     @SubscribeMessage('message')
     async onEvent(client: Socket, messageRequest: MessageRequest) {
         const user: User = await this.authService.getUserByToken(messageRequest.token)
