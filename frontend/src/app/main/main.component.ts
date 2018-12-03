@@ -25,6 +25,8 @@ export class MainComponent implements OnInit {
 
   searchingUsers: boolean
 
+  moreActive: boolean
+
   constructor(
     private socketService: SocketService,
     private userService: UserService,
@@ -46,6 +48,16 @@ export class MainComponent implements OnInit {
 
     this.initializeSocket()
 
+
+  }
+
+  onClickToLogout() {
+    localStorage.setItem('token', '')
+    this.router.navigateByUrl('/')
+  }
+
+  onClickToMore() {
+    this.moreActive = !this.moreActive
   }
 
   onClickToSearchUsers() {

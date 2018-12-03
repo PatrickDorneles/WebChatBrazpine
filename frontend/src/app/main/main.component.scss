@@ -109,6 +109,43 @@ $message-input-heigth: 80px;
                         }
     
                     }
+
+                    .more-button {
+                        position: relative;
+                        .dropdown {
+                            display: flex;
+                            flex-direction: column;
+                            position: absolute;
+                            width: 70px;
+                            background: white;
+                            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+                            z-index: 100;
+                            padding: 10px 0;
+                            border-radius: 5px;
+                            left: 50%;
+                            top: 110%;
+                            transform: translateX(-50%);
+
+                            button {
+                                width: 100%;
+                                border-radius: 0;
+                            }
+
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                bottom: 100%;
+                                right: 50%;
+                                transform: translateX(50%);
+                                width: 0; 
+                                height: 0; 
+                                border-left: 5px solid transparent;
+                                border-right: 5px solid transparent;
+
+                                border-bottom: 5px solid white;
+                            }
+                        }
+                    }
                 }
             }
 
